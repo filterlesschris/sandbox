@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Weather Search</title>
+</head>
+<style type="text/css">
+  h1 {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 500;
+  line-height: 26.4px;
+  text-align: center;
+}
+h3 {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 500;
+  line-height: 15.4px;
+  text-align: center;
+}
+p {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: center;
+}
+blockquote {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 21px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  line-height: 30px;
+  text-align: center;
+}
+pre {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 13px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  line-height: 18.5714px;
+  text-align: center;
+}
+
+.container {
+  margin: auto;
+  padding-top: 50px;
+  padding-bottom: 70px;
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: #f0f0f5;
+  height: auto;
+}
+@media (min-height: 475px) {
+  .container {
+    height: 325px;
+    padding-bottom: 70px;
+  }
+}
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+body{
+  background-color: #66ccff;
+}
+</style>
+<body>
+    <div class="container">
+      <h1>Weather Search</h1>
+
+      <!-- This form will be where users input data about the movies -->
+      <form id="location-form">
+        <p><label for="location-input">Search a location</label></p>
+
+        <p><input type="text" id="location-input"></p>
+        
+        <!-- This button will trigger our AJAX call -->
+        <p><input id="find-location" type="submit" value="Submit"></p>
+        
+        <!-- Retrieved data will be dumped here -->
+        <br></br>
+        <div id="location-view"></div>
+        <div class="city"></div>
+        <div class="wind"></div>
+        <div class="humidity"></div>
+        <div class="temp"></div>
+
+      </form>
+    </div> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.7.3/d3.min.js"></script>
+  <script type="text/javascript">
+    // This is our API key
+    var APIKey = "166a433c57516f51dfab1f7edaed8413";
+
+    // Here we are building the URL we need to query the database
+    // var queryURL = "https://api.openweathermap.org/data/2.5/weather?" +
+    //  "q=London,England&units=imperial&appid=" + APIKey;
+
+    // Here we run our AJAX call to the OpenWeatherMap API
+    
+    d3.select("#find-location").on("click", function(event) {
+
+        // d3.event.preventDefault() can be used to prevent an event's default behavior.
+        // Here, it prevents the submit button from trying to submit a form when clicked
+        d3.event.preventDefault();
+
+        // Here we grab the text from the input box
+        var location = d3.select("#location-input").node().value;
+
+        // Here we construct our URL
+        var queryURL = "https://api.openweathermap.org/data/2.5/weather?" + "q="+ location +"&units=imperial&appid=" + APIKey;
+
+        // Write code between the dashes below to hit the queryURL with d3.json, then take the response data
+        // and display it in the div with an id of movie-view
+
+        //------YOUR CODE GOES IN THESE DASHES. DO NOT MANUALLY EDIT THE HTML ABOVE.
+
+        d3.json(queryURL, function(error, response) {
+          if (error) return console.warn(error);
+          //d3.select("#location-view").text(JSON.stringify(response));
+
+        // Log the queryURL
+        console.log(queryURL);
+
+        // We store all of the retrieved data inside of an object called "response"
+        // Log the resulting object
+        console.log(response);
+
+        // Transfer content to HTML
+        d3.select(".city").html("<h1>" + response.name + " Weather Details</h1>");
+        d3.select(".wind").html("<p>Wind Speed: " + response.wind.speed+"</p>");
+        d3.select(".humidity").html("<p>Humidity: " + response.main.humidity+"</p>");
+        d3.select(".temp").html("<p>Temperature (F) " + response.main.temp+"</p>");
+
+        // Log the data in the console as well
+        console.log("Wind Speed: " + response.wind.speed);
+        console.log("Humidity: " + response.main.humidity);
+        console.log("Temperature (F): " + response.main.temp);
+    });
+
+        });
+        // -----------------------------------------------------------------------
+  </script>
+</body>
+
+</html>
