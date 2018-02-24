@@ -24,39 +24,16 @@ function handleConvertButtonClick(inputField) {
 		//run this is the userfield is not empty, null, or blank..
 		console.log(inputField);
 		$tbody.innerHTML = "";
+
 		for (var i = 0; i < 1; i++) {
 			var $row = $tbody.insertRow(i);
 			// add a cell for the user input
 			$row.innerText = inputField;
-			for (var j = 0; j < 1; j++) {
-				// add a cell for the converted input
-				var $cell = $row.insertCell(j);
-				$cell.innerText = convertedInput;
-				
-				var btn = document.createElement('input');
-				btn.type = "button";
-				//btn.className = "btn";
-				btn.value = convertedInput;
-				btn.onclick = (function(myCopy) {return function() {myCopy(myCopy);}})(myCopy);
-				var td = document.createElement("td");
-				td.appendChild(btn);
-			}
+			var $cell = $row.insertCell(0);
+			$cell.innerText = convertedInput;
 		}
+
 		return false;
 	}
 
-}
-
-function myCopy() {
-  /* Get the text field */
-  var copyText = convertedInput;
-
-  /* Select the text field */
-  copyText.select();
-
-  /* Copy the text inside the text field */
-  document.execCommand("Copy");
-
-  /* Alert the copied text */
-  alert("Copied the text: " + copyText.value);
 }
